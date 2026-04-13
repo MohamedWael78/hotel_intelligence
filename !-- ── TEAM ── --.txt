@@ -1,0 +1,44 @@
+<!-- ── TEAM ── -->
+        <section class="sec reveal" id="team">
+            <div class="sec-hdr">
+                <div>
+                    <span class="sec-tag">THE TEAM</span>
+                    <h2 class="sec-title">Mohamed Wael — MTC 2026</h2>
+                    <p class="sec-sub">Supervised by Dr. Mohamed El Shafey · Data Mining & Visualization · Military
+                        Technical College</p>
+                </div>
+            </div>
+            <div class="team-grid stagger">
+                <div class="card team-card">
+                    <div class="team-av">W</div>
+                    <div class="team-name">Wael</div>
+                    <div class="team-role">DB Architect & SQL Engineer & EDA Engineer </div>
+                </div>
+                <div class="card team-card">
+                    <div class="team-av">S</div>
+                    <div class="team-name">Saad</div>
+                    <div class="team-role">SQL Engineer</div>
+                </div>
+                <div class="card team-card">
+                    <div class="team-av">E</div>
+                    <div class="team-name">El Kholy</div>
+                    <div class="team-role">Python / EDA Engineer</div>
+                </div>
+                <div class="card team-card">
+                    <div class="team-av">W</div>
+                    <div class="team-name">Gharieb</div>
+                    <div class="team-role">Orange / ML Engineer</div>
+                </div>
+                <div class="card team-card">
+                    <div class="team-av">H</div>
+                    <div class="team-name">Hesham</div>
+                    <div class="team-role">Report & Dashboard</div>
+                </div>
+                <div class="card team-card"
+                    style="background:linear-gradient(135deg,rgba(31,122,140,.25),rgba(10,22,40,.5));border-color:rgba(46,196,182,.3)">
+                    <div class="team-av" style="background:linear-gradient(135deg,var(--teal),var(--teal2))">Dr</div>
+                    <div class="team-name">Dr. Mohamed El Shafey</div>
+                    <div class="team-role">Course Supervisor</div>
+                </div>
+            </div>
+        </section>

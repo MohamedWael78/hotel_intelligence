@@ -1,0 +1,30 @@
+Back-End
+python -m uvicorn main:app --reload
+
+Front-End
+npm run dev
+
+
+
+python -m pip install -r requirements.txt
+
+
+
+VITE_ANTHROPIC_KEY='@Mohamed_Wael_92001#'
+
+https://github.com/MohamedWael78/hotel_intelligence.git
+
+
+echo "# hotel_intelligence" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/MohamedWael78/hotel_intelligence.git
+git push -u origin main
+
+
+
+git remote add origin https://github.com/MohamedWael78/hotel_intelligence.git
+git branch -M main
+git push -u origin main

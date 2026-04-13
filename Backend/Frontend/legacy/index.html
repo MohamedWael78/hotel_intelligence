@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Intelligence — Mohamed Wael | MTC</title>
+    <meta name="description"
+        content="Hotel Reservation & Billing Intelligence System — Data Mining project by Mohamed Wael, Military Technical College, supervised by Dr. Mohamed El Shafey.">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <nav class="topbar" id="topbar">
+        <a class="tb-brand" href="#">
+            <svg class="snipers-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="36" height="36">
+                <circle cx="22" cy="22" r="19" fill="none" stroke="#2EC4B6" stroke-width="1.8" />
+                <circle cx="22" cy="22" r="10" fill="none" stroke="#2EC4B6" stroke-width="1.2" />
+                <circle cx="22" cy="22" r="3" fill="#E0A050" />
+                <line x1="22" y1="2" x2="22" y2="11.5" stroke="#2EC4B6" stroke-width="2.2" stroke-linecap="round" />
+                <line x1="22" y1="32.5" x2="22" y2="42" stroke="#2EC4B6" stroke-width="2.2" stroke-linecap="round" />
+                <line x1="2" y1="22" x2="11.5" y2="22" stroke="#2EC4B6" stroke-width="2.2" stroke-linecap="round" />
+                <line x1="32.5" y1="22" x2="42" y2="22" stroke="#2EC4B6" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+            <span class="tb-title">Hotel <em>Intelligence</em></span>
+        </a>
+        <div class="tb-nav">
+            <button class="nb active" onclick="scrollTo('#overview')">Overview</button>
+            <button class="nb" onclick="scrollTo('#team')">Team</button>
+            <button class="nb" onclick="scrollTo('#database')">Database</button>
+            <button class="nb" onclick="scrollTo('#eda')">EDA</button>
+            <button class="nb" onclick="scrollTo('#dashboard')">Dashboard</button>
+            <button class="nb" onclick="scrollTo('#ml')">ML Models</button>
+            <button class="nb" onclick="scrollTo('#recommendations')">Recommendations</button>
+        </div>
+        <div class="tb-right">
+            <span class="pill">Mohamed Wael</span>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="overview">
+        <div class="hero-bg"></div>
+        <div class="hero-blob1"></div>
+        <div class="hero-blob2"></div>
+        <div class="hero-inner">
+            <div>
+                <div class="hero-tag"><span class="dot"></span>DATA MINING & VISUALIZATION — MILITARY TECHNICAL COLLEGE
+                </div>
+                <h1>Hotel Reservation &amp;<br><span>Billing Intelligence</span></h1>
+                <p class="hero-sub">A comprehensive end-to-end data mining project by Mohamed Wael. We engineered a
+                    production-grade relational database, performed a 20-question EDA on 119,390 bookings, and built
+                    predictive ML models — supervised by Dr. Mohamed El Shafey.</p>
+                <div class="hero-stats">
+                    <div class="hs-item">
+                        <div class="hs-val">119,390</div>
+                        <div class="hs-lbl">Booking Records</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-val">11</div>
+                        <div class="hs-lbl">DB Tables</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-val">0.962</div>
+                        <div class="hs-lbl">Best AUC</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-val">37%</div>
+                        <div class="hs-lbl">Cancel Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-side">
+                <div class="hero-stat-card">
+                    <div class="val">93.2%</div>
+                    <div class="lbl">Random Forest Accuracy</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="val">10</div>
+                    <div class="lbl">SQL Analytical Views</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="val">k=3</div>
+                    <div class="lbl">Guest Behavioral Clusters</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <span class="fl">Filter:</span>
+        <div class="fg">
+            <button class="chip active" data-filter="all">All Hotels</button>
+            <button class="chip" data-filter="city">City Hotel</button>
+            <button class="chip" data-filter="resort">Resort Hotel</button>
+        </div>
+        <div class="fsep"></div>
+        <div class="fg">
+            <button class="chip active" data-year="all">All Years</button>
+            <button class="chip" data-year="2015">2015</button>
+            <button class="chip" data-year="2016">2016</button>
+            <button class="chip" data-year="2017">2017</button>
+        </div>
+    </div>
+
+    <div class="main">
+
+
+        <!-- ── DATABASE ── -->
+        <section class="sec reveal" id="database">
+            <span class="sec-tag">DATABASE ENGINEERING</span>
+            <h2 class="sec-title">Relational Schema Design</h2>
+            <p class="sec-sub">11 normalized tables across 4 functional domains — Reservations as the central hub,
+                normalized to 3NF throughout.</p>
+
+            <div class="callout">
+                <div class="callout-lbl">Design Principle</div>
+                <div class="callout-txt">The Reservations entity acts as a hub with 4 FKs linking Hotels, Guests, Rooms,
+                    and Staff. A 1:1 Reservation→Invoice relationship and ServiceUsage junction table deliberately
+                    separate operational and billing analytics. All 119,390 rows ingested via a 4-stage ETL pipeline in
+                    under 30 seconds.</div>
+            </div>
+
+            <div class="g3 stagger" style="margin-top:24px">
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl">Master Data</span><span class="cbadge">6 Tables</span>
+                    </div>
+                    <ul class="feat-list">
+                        <li>Hotels — HotelID, Name, City, StarRating</li>
+                        <li>RoomTypes — TypeID, Name, Capacity, BasePrice</li>
+                        <li>Rooms — UNIQUE(HotelID, RoomNum)</li>
+                        <li>Guests — GuestID, Email, IsRepeatedGuest</li>
+                        <li>Staff — Role, Department, HotelID FK</li>
+                        <li>Services — Name, Category, Price</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl">Transactional</span><span class="cbadge">4
+                            Tables</span></div>
+                    <ul class="feat-list">
+                        <li>Reservations — 4×FK hub, Status, Channel, Nights</li>
+                        <li>ServiceUsage — M:N junction (Reservation×Service)</li>
+                        <li>Invoices — 1:1 with Reservation, OutstandingAmount</li>
+                        <li>Payments — 1:N under Invoice, partial payments OK</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl">Ops + Staging</span><span class="cbadge">1+1
+                            Tables</span></div>
+                    <ul class="feat-list">
+                        <li>HousekeepingLogs — StartTime, EndTime, CleaningType</li>
+                        <li>HotelBooking_Staging — flat NVARCHAR buffer for CSV</li>
+                        <li>4-stage ETL: Load → Validate → Normalize → Error-log</li>
+                        <li>119,390 rows ingested in under 30 seconds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="font-family:var(--font-d);font-size:1.3rem;color:var(--white);margin:36px 0 16px">10 Analytical
+                SQL Views</h3>
+            <div class="card" style="padding:0">
+                <div class="tbl-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>View Name</th>
+                                <th>Business Question</th>
+                                <th>Key Technique</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>vw_HotelOccupancyRate</code></td>
+                                <td>Occupancy % per hotel (last 30 days)</td>
+                                <td>COUNT DISTINCT · NULLIF guard</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_MonthlyRevenue</code></td>
+                                <td>Revenue trend by month &amp; hotel</td>
+                                <td>YEAR/MONTH · GROUP BY</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_GuestStayHistory</code></td>
+                                <td>Guest lifetime value &amp; stay count</td>
+                                <td>LEFT JOIN · SUM · COUNT</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_CancellationByChannel</code></td>
+                                <td>Cancellation rate per booking channel</td>
+                                <td>Correlated subquery · CAST %</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_RoomTypePerformance</code></td>
+                                <td>Revenue &amp; demand by room type</td>
+                                <td>AVG · SUM · rank</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_OutstandingInvoices</code></td>
+                                <td>Unpaid balances &amp; days overdue</td>
+                                <td>DATEDIFF · WHERE outstanding &gt; 0</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_ServiceUsageAnalysis</code></td>
+                                <td>Most revenue-generating services</td>
+                                <td>LEFT JOIN Services · rank</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_PaymentMethodBreakdown</code></td>
+                                <td>Revenue share per payment method</td>
+                                <td>Scalar subquery · % share</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_HousekeepingTurnaround</code></td>
+                                <td>Avg &amp; max cleaning time per room</td>
+                                <td>DATEDIFF MINUTE · AVG · MAX</td>
+                            </tr>
+                            <tr>
+                                <td><code>vw_StaffPerformance</code></td>
+                                <td>Revenue &amp; bookings per staff member</td>
+                                <td>Multiple LEFT JOINs · COUNT · SUM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="g2" style="margin-top:24px">
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl" style="font-family:var(--font-m);font-size:13px">INSERT
+                            — New Reservation</span></div>
+                    <div class="code-block"><code><span class="kw">INSERT INTO</span> Reservations (
+    HotelID, GuestID, RoomID,
+    CheckInDate, Nights, Status
+) <span class="kw">VALUES</span> (
+    <span class="num">1</span>, <span class="num">1042</span>, <span class="num">55</span>,
+    <span class="str">'2025-06-15'</span>, <span class="num">3</span>, <span class="str">'Confirmed'</span>
+);</code></div>
+                </div>
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl" style="font-family:var(--font-m);font-size:13px">UPDATE
+                            — Cancel Reservation</span></div>
+                    <div class="code-block"><code><span class="kw">UPDATE</span> Reservations
+<span class="kw">SET</span> Status = <span class="str">'Canceled'</span>,
+    UpdatedAt = <span class="fn">GETDATE</span>()
+<span class="kw">WHERE</span> ReservationID = <span class="num">8921</span>
+  <span class="kw">AND</span> Status != <span class="str">'CheckedOut'</span>;</code></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── EDA ── -->
+        <section class="sec reveal" id="eda">
+            <span class="sec-tag">EXPLORATORY DATA ANALYSIS</span>
+            <h2 class="sec-title">EDA Gallery — 20 Questions</h2>
+            <p class="sec-sub">Full Appendix B analysis: data quality, univariate, bivariate, and multivariate.</p>
+
+            <div class="eda-tabs">
+                <button class="eda-tab active" onclick="showEdaTab('quality',this)">Data Quality</button>
+                <button class="eda-tab" onclick="showEdaTab('distributions',this)">Distributions</button>
+                <button class="eda-tab" onclick="showEdaTab('categorical',this)">Categorical</button>
+            </div>
+
+            <div id="eda-quality" class="eda-pane active">
+                <div class="g3 stagger">
+                    <div class="card plot-card">
+                        <div class="plot-hdr"><span class="plot-ttl">Missing Values &amp; Validity
+                                Violations</span><span class="cbadge teal">Q1</span></div>
+                        <img class="plot-img" src="assets/eda/q1.png" alt="Missing Values"
+                            onerror="this.parentElement.style.height='180px';this.style.display='none'">
+                        <p class="plot-cap">Analysis of missing values across all dataset features. Children and Country
+                            columns had the most nulls requiring imputation strategies.</p>
+                    </div>
+                    <div class="card plot-card">
+                        <div class="plot-hdr"><span class="plot-ttl">Data Inconsistencies</span><span
+                                class="cbadge teal">Q2</span></div>
+                        <img class="plot-img" src="assets/eda/q2.png" alt="Inconsistencies"
+                            onerror="this.parentElement.style.height='180px';this.style.display='none'">
+                        <p class="plot-cap">Identification of structural errors and invalid formats — e.g., ADR = 0 with
+                            positive nights, and agent/company NULL patterns.</p>
+                    </div>
+                    <div class="card plot-card">
+                        <div class="plot-hdr"><span class="plot-ttl">Outlier Detection (Boxplots)</span><span
+                                class="cbadge teal">Q3</span></div>
+                        <img class="plot-img" src="assets/eda/q3.png" alt="Outliers"
+                            onerror="this.parentElement.style.height='180px';this.style.display='none'">
+                        <p class="plot-cap">Boxplots highlighting extreme ADR values (&gt;€500) and lead times (&gt;700
+                            days). Validated as real data, not corruption.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eda-distributions" class="eda-pane">
+                <div class="g3 stagger">
+                    <div class="card plot-card">
+                        <div class="plot-hdr"><span class="plot-ttl">ADR Distribution</span><span
+                                class="cbadge teal">Q5</span></div>
+                        <img class="plot-img" src="assets/eda/q5.png" alt="ADR"
+                            onerror="this.parentElement.style.height='180px';this.style.display='none'">
+                        <p class="plot-cap">Right-skewed ADR distribution. City hotels cluster at €80–120 while resort
+                            hotels show a wider spread, reflecting higher variability in seasonal rates.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-hdr"><span class="card-ttl">Lead Time Stats</span><span
+                                class="cbadge teal">Q4</span></div>
+                        <ul class="feat-list" style="margin-top:8px">
+                            <li>Mean lead time: <strong>104 days</strong></li>
+                            <li>Median: <strong>69 days</strong> (heavy right skew)</li>
+                            <li>75th percentile: <strong>160 days</strong></li>
+                            <li>Max: <strong>737 days</strong> (~2 years ahead)</li>
+                            <li>Bookings &gt;120 days: <strong>28%</strong> of total</li>
+                            <li>Strong positive correlation with cancellation</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-hdr"><span class="card-ttl">Stay Duration</span><span
+                                class="cbadge teal">Q6</span></div>
+                        <div style="height:180px"><canvas id="stayDurChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eda-categorical" class="eda-pane">
+                <div class="g2 stagger">
+                    <div class="card">
+                        <div class="card-hdr"><span class="card-ttl">Market Segment Breakdown</span><span
+                                class="cbadge teal">Q7</span></div>
+                        <div style="height:220px"><canvas id="edaSegChart"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-hdr"><span class="card-ttl">Meal Plan Popularity</span><span
+                                class="cbadge teal">Q8</span></div>
+                        <div style="height:220px"><canvas id="edaMealChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── DASHBOARD ── -->
+        <section class="sec reveal" id="dashboard">
+            <span class="sec-tag">EXECUTIVE INTELLIGENCE</span>
+            <h2 class="sec-title">Live KPI Dashboard</h2>
+            <p class="sec-sub">Mirroring the 10 SQL views — verified metrics from the hotel booking dataset (2015–2017).
+            </p>
+
+            <div class="kpi-grid stagger">
+                <div class="card kpi k-navy">
+                    <div class="kpi-icon">📋</div>
+                    <div class="kpi-val">119,390</div>
+                    <div class="kpi-lbl">Total Bookings</div>
+                    <div class="kpi-delta">2015–2017</div>
+                </div>
+                <div class="card kpi k-red">
+                    <div class="kpi-icon">❌</div>
+                    <div class="kpi-val">37.0%</div>
+                    <div class="kpi-lbl">Cancellation Rate</div>
+                    <div class="kpi-delta neg">44,224 bookings lost</div>
+                </div>
+                <div class="card kpi k-amber">
+                    <div class="kpi-icon">💶</div>
+                    <div class="kpi-val">€101.8</div>
+                    <div class="kpi-lbl">Mean ADR</div>
+                    <div class="kpi-delta">Median: €94.6</div>
+                </div>
+                <div class="card kpi k-teal">
+                    <div class="kpi-icon">🏨</div>
+                    <div class="kpi-val">66%</div>
+                    <div class="kpi-lbl">City Hotel Share</div>
+                    <div class="kpi-delta">vs 34% Resort</div>
+                </div>
+                <div class="card kpi k-green">
+                    <div class="kpi-icon">🔁</div>
+                    <div class="kpi-val">3.2%</div>
+                    <div class="kpi-lbl">Repeat Guest Rate</div>
+                    <div class="kpi-delta">Cancel at 15% vs 40%</div>
+                </div>
+                <div class="card kpi k-red">
+                    <div class="kpi-icon">⚡</div>
+                    <div class="kpi-val">~3,290</div>
+                    <div class="kpi-lbl">High-Risk Bookings</div>
+                    <div class="kpi-delta neg">Lead&gt;120d + Non-Refund</div>
+                </div>
+            </div>
+
+            <div class="g2 reveal">
+                <div class="card plot-card">
+                    <div class="chart-title">Monthly Booking Trend by Hotel Type</div>
+                    <div class="chart-wrap"><canvas id="monthlyChart"></canvas></div>
+                </div>
+                <div class="card plot-card">
+                    <div class="chart-title">Cancellation Rate by Market Segment</div>
+                    <div class="chart-wrap"><canvas id="cancelSegChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="g2 reveal" style="margin-top:24px">
+                <div class="card plot-card">
+                    <div class="chart-title">ADR by Hotel Type &amp; Season</div>
+                    <div class="chart-wrap"><canvas id="adrChart"></canvas></div>
+                </div>
+                <div class="card plot-card">
+                    <div class="chart-title">Revenue by Deposit Type</div>
+                    <div class="chart-wrap"><canvas id="depositChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Risk Matrix -->
+            <div class="card reveal" style="margin-top:24px">
+                <div class="card-hdr">
+                    <span class="card-ttl">Cancellation Risk Matrix — Lead Time × Deposit Type</span>
+                    <span class="cbadge teal">SQL View · Q4</span>
+                </div>
+                <div class="risk-matrix">
+                    <div class="rm-cell rm-hdr">Lead Time Band</div>
+                    <div class="rm-cell rm-hdr">No Deposit</div>
+                    <div class="rm-cell rm-hdr">Non Refund</div>
+                    <div class="rm-cell rm-hdr">Refundable</div>
+                    <div class="rm-cell rm-label">0–30 days</div>
+                    <div class="rm-cell rm-green">~18%</div>
+                    <div class="rm-cell rm-yellow">~65%</div>
+                    <div class="rm-cell rm-green">~12%</div>
+                    <div class="rm-cell rm-label">31–90 days</div>
+                    <div class="rm-cell rm-yellow">~28%</div>
+                    <div class="rm-cell rm-orange">~88%</div>
+                    <div class="rm-cell rm-yellow">~22%</div>
+                    <div class="rm-cell rm-label">&gt;120 days</div>
+                    <div class="rm-cell rm-orange">~42%</div>
+                    <div class="rm-cell rm-red">~99% ⚠</div>
+                    <div class="rm-cell rm-orange">~38%</div>
+                </div>
+                <div class="callout warn" style="margin-top:16px">
+                    <div class="callout-lbl">Key Insight — The Non-Refund Paradox</div>
+                    <div class="callout-txt">Non-Refundable deposits with lead time &gt;120 days show a ~99%
+                        cancellation rate. OTA guests book speculatively at the cheapest rate, then cancel. This is a
+                        systemic <strong>policy vulnerability</strong>, not a data anomaly.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── ML MODELS ── -->
+        <section class="sec reveal" id="ml">
+            <span class="sec-tag">MACHINE LEARNING</span>
+            <h2 class="sec-title">Predictive Models &amp; Guest Clustering</h2>
+            <p class="sec-sub">Four classifiers trained on 119,390 bookings for cancellation prediction, plus k-Means
+                guest segmentation.</p>
+
+            <div class="g4 stagger">
+                <div class="card model-card mc-rf">
+                    <div class="mc-icon">🌲</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <div class="mc-name">Random Forest</div>
+                        <span class="cbadge teal">🥇 Production</span>
+                    </div>
+                    <p class="mc-desc">300 trees, balanced class weights. Highest feature importance interpretability.
+                    </p>
+                    <div class="mc-metrics">
+                        <div class="mc-metric"><span class="mc-mval">93.2%</span>
+                            <div class="mc-mlbl">Accuracy</div>
+                        </div>
+                        <div class="mc-metric"><span class="mc-mval">0.962</span>
+                            <div class="mc-mlbl">AUC</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card model-card mc-xgb">
+                    <div class="mc-icon">⚡</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <div class="mc-name">XGBoost</div>
+                        <span class="cbadge" style="background:rgba(230,57,70,.15);color:#E63946">Boosted</span>
+                    </div>
+                    <p class="mc-desc">Gradient boosting with sequential error correction. Near-RF accuracy, faster
+                        inference.</p>
+                    <div class="mc-metrics">
+                        <div class="mc-metric"><span class="mc-mval">91.8%</span>
+                            <div class="mc-mlbl">Accuracy</div>
+                        </div>
+                        <div class="mc-metric"><span class="mc-mval">0.955</span>
+                            <div class="mc-mlbl">AUC</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card model-card mc-lr">
+                    <div class="mc-icon">📈</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <div class="mc-name">Logistic Regression</div>
+                        <span class="cbadge" style="background:rgba(201,137,58,.15);color:var(--gold)">Baseline</span>
+                    </div>
+                    <p class="mc-desc">Interpretable linear baseline. Coefficients reveal each feature's direct
+                        contribution.</p>
+                    <div class="mc-metrics">
+                        <div class="mc-metric"><span class="mc-mval">80.1%</span>
+                            <div class="mc-mlbl">Accuracy</div>
+                        </div>
+                        <div class="mc-metric"><span class="mc-mval">0.871</span>
+                            <div class="mc-mlbl">AUC</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card model-card mc-dt">
+                    <div class="mc-icon">🌿</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <div class="mc-name">Decision Tree</div>
+                        <span class="cbadge" style="background:rgba(36,113,163,.2);color:#5BC0EB">Rules</span>
+                    </div>
+                    <p class="mc-desc">Max depth 7. Human-readable business rules directly from the model.</p>
+                    <div class="mc-metrics">
+                        <div class="mc-metric"><span class="mc-mval">87.4%</span>
+                            <div class="mc-mlbl">Accuracy</div>
+                        </div>
+                        <div class="mc-metric"><span class="mc-mval">0.891</span>
+                            <div class="mc-mlbl">AUC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIVE PREDICTOR -->
+            <h3 style="font-family:var(--font-d);font-size:1.4rem;color:var(--white);margin:40px 0 16px">🎯 Live
+                Cancellation Risk Calculator</h3>
+            <div class="predictor-wrap reveal">
+                <div class="pred-hdr">
+                    <div style="font-size:28px">🤖</div>
+                    <div>
+                        <h3>Real-Time Booking Risk Assessment</h3>
+                        <p>Enter booking parameters — Random Forest scores cancellation probability instantly.</p>
+                    </div>
+                </div>
+                <div class="pred-body">
+                    <div class="pred-form">
+                        <div class="form-grid">
+                            <div>
+                                <label class="fg-lbl">Hotel Type</label>
+                                <select class="fg-input" id="f_hotel">
+                                    <option value="0">City Hotel</option>
+                                    <option value="1">Resort Hotel</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Lead Time (days)</label>
+                                <input class="fg-input" type="number" id="f_lead" value="45" min="0" max="737">
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Deposit Type</label>
+                                <select class="fg-input" id="f_deposit">
+                                    <option value="0">No Deposit</option>
+                                    <option value="1">Non Refund</option>
+                                    <option value="2">Refundable</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Market Segment</label>
+                                <select class="fg-input" id="f_segment">
+                                    <option value="0">Direct</option>
+                                    <option value="1">Corporate</option>
+                                    <option value="2">Online TA</option>
+                                    <option value="3">Offline TA/TO</option>
+                                    <option value="4">Groups</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="fg-lbl">ADR (€/night)</label>
+                                <input class="fg-input" type="number" id="f_adr" value="98" min="0" max="510">
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Special Requests</label>
+                                <input class="fg-input" type="number" id="f_req" value="0" min="0" max="5">
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Prior Cancellations</label>
+                                <input class="fg-input" type="number" id="f_prev" value="0" min="0" max="26">
+                            </div>
+                            <div>
+                                <label class="fg-lbl">Repeat Guest</label>
+                                <select class="fg-input" id="f_repeat">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-predict" id="predictBtn" onclick="doPrediction()">⚡ Calculate Cancellation
+                            Risk</button>
+                    </div>
+                    <div class="pred-result" id="predResult">
+                        <div style="color:var(--muted);text-align:center">
+                            <div style="font-size:52px;opacity:.3;margin-bottom:12px">🎯</div>
+                            <div>Enter booking details and click Calculate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Importance -->
+            <div class="g2 reveal" style="margin-top:32px">
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl">🌲 Random Forest — Feature Importance</span></div>
+                    <div id="rfImportance" style="margin-top:8px"></div>
+                </div>
+                <div class="card">
+                    <div class="card-hdr"><span class="card-ttl">📊 ROC Curve Comparison</span></div>
+                    <div style="height:260px"><canvas id="rocChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Clusters -->
+            <h3 style="font-family:var(--font-d);font-size:1.4rem;color:var(--white);margin:40px 0 8px">Guest Behavioral
+                Segmentation</h3>
+            <p style="color:var(--muted);font-size:13px;margin-bottom:4px">k-Means clustering (k=3) · Silhouette Score:
+                0.61</p>
+            <div class="cluster-grid reveal">
+                <div class="cc cc-a">
+                    <div class="cc-icon">🏆</div>
+                    <div class="cc-pct">32%</div>
+                    <div class="cc-name">Cluster A: Loyal Guests</div>
+                    <div class="cc-lbl">Short lead · Repeat · High ADR</div>
+                    <div class="cc-stat">~15% cancellation rate<br>Direct booking channel<br>High special requests</div>
+                </div>
+                <div class="cc cc-b">
+                    <div class="cc-icon">⚠️</div>
+                    <div class="cc-pct">47%</div>
+                    <div class="cc-name">Cluster B: OTA Planners</div>
+                    <div class="cc-lbl">Long lead · 1st-time guest</div>
+                    <div class="cc-stat">~68% cancellation rate<br>Non-Refund OTA deposits<br>Speculative booking
+                        behaviour</div>
+                </div>
+                <div class="cc cc-c">
+                    <div class="cc-icon">🏢</div>
+                    <div class="cc-pct">21%</div>
+                    <div class="cc-name">Cluster C: Corporate</div>
+                    <div class="cc-lbl">Stable · Contract-based</div>
+                    <div class="cc-stat">~18% cancellation rate<br>Predictable ADR patterns<br>Strong revenue
+                        contribution</div>
+                </div>
+            </div>
+
+            <!-- ML Pipeline -->
+            <div class="card reveal" style="margin-top:32px">
+                <div class="card-hdr"><span class="card-ttl">End-to-End ML Pipeline</span></div>
+                <div class="pipeline">
+                    <div class="ps">
+                        <div class="ps-num">1</div>
+                        <div class="ps-icon">📂</div>
+                        <div class="ps-name">Raw CSV</div>
+                        <div class="ps-sub">119,390 rows</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">2</div>
+                        <div class="ps-icon">🧹</div>
+                        <div class="ps-name">Clean & Validate</div>
+                        <div class="ps-sub">Missing, outliers</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">3</div>
+                        <div class="ps-icon">⚙️</div>
+                        <div class="ps-name">Feature Engineering</div>
+                        <div class="ps-sub">7 new features</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">4</div>
+                        <div class="ps-icon">🔢</div>
+                        <div class="ps-name">Encode & Scale</div>
+                        <div class="ps-sub">Label + StandardScaler</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">5</div>
+                        <div class="ps-icon">🏋️</div>
+                        <div class="ps-name">Train Models</div>
+                        <div class="ps-sub">RF · LR · DT · XGB</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">6</div>
+                        <div class="ps-icon">📊</div>
+                        <div class="ps-name">Evaluate</div>
+                        <div class="ps-sub">ROC-AUC · 5-fold CV</div>
+                    </div>
+                    <div class="pa">→</div>
+                    <div class="ps">
+                        <div class="ps-num">7</div>
+                        <div class="ps-icon">🚀</div>
+                        <div class="ps-name">Export</div>
+                        <div class="ps-sub">hotel_ml_scored.csv</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── RECOMMENDATIONS ── -->
+        <section class="sec reveal" id="recommendations">
+            <span class="sec-tag">BUSINESS RECOMMENDATIONS</span>
+            <h2 class="sec-title">6 Actionable Strategies</h2>
+            <p class="sec-sub">Derived from EDA findings and validated by ML. Structured by implementation priority.</p>
+            <div class="rec-grid stagger">
+                <div class="card rec-card rc-high">
+                    <div class="rec-prio">🔴 Immediate Priority</div>
+                    <div class="rec-ttl">Deploy Real-Time Cancellation Risk Score</div>
+                    <div class="rec-body">Integrate into PMS: lead_time&gt;120d (+2pts) + Non-Refund deposit (+3pts) +
+                        prior_cancellations≥1 (+2pts). Score≥5 triggers re-confirmation workflow 14 days pre-arrival.
+                        AUC 0.962 validates signal accuracy.</div>
+                    <span class="rec-impact">Impact: Manage ~15% of high-risk inventory proactively</span>
+                </div>
+                <div class="card rec-card rc-high">
+                    <div class="rec-prio">🔴 Immediate Priority</div>
+                    <div class="rec-ttl">Revise Non-Refundable OTA Deposit Policy</div>
+                    <div class="rec-body">The ~99% cancellation rate for Non-Refund OTA bookings is a systemic policy
+                        failure. Negotiate true pre-auth captures with OTA partners or discontinue Non-Refund rate plans
+                        on OTA channels entirely.</div>
+                    <span class="rec-impact">Impact: Eliminate the deposit-cancellation paradox</span>
+                </div>
+                <div class="card rec-card rc-med">
+                    <div class="rec-prio">🟡 Medium-Term</div>
+                    <div class="rec-ttl">Launch Direct Booking Incentive Programme</div>
+                    <div class="rec-body">Direct bookings deliver higher ADR and lower cancellation than any OTA
+                        channel. Offer guaranteed upgrade + flexible cancellation. A 5% OTA→Direct shift saves ~2.3pp
+                        cancellation rate.</div>
+                    <span class="rec-impact">Impact: −2.3pp cancel rate · higher ADR</span>
+                </div>
+                <div class="card rec-card rc-med">
+                    <div class="rec-prio">🟡 Medium-Term</div>
+                    <div class="rec-ttl">Special Request Solicitation at Booking</div>
+                    <div class="rec-body">Each additional special request reduces cancellation probability by ~8%.
+                        Automated post-booking email asking for preferences deepens guest commitment at zero marginal
+                        cost.</div>
+                    <span class="rec-impact">Impact: Reduce cancellation via psychological investment</span>
+                </div>
+                <div class="card rec-card rc-strat">
+                    <div class="rec-prio">🔵 Strategic</div>
+                    <div class="rec-ttl">Structured Loyalty Programme</div>
+                    <div class="rec-body">Repeat guests cancel at 15% vs 40% — a 25pp differential. Converting 1
+                        new→repeat guest eliminates 2.7× the cancellation risk. Tiered benefits drive conversion.</div>
+                    <span class="rec-impact">Impact: Each repeat conversion = 2.7× risk reduction</span>
+                </div>
+                <div class="card rec-card rc-strat">
+                    <div class="rec-prio">🔵 Strategic</div>
+                    <div class="rec-ttl">Power BI Revenue Management Dashboard</div>
+                    <div class="rec-body">Deploy Power BI via DirectQuery to SQL Server using the 10 analytical views as
+                        the data layer. Live occupancy, ADR by room type, outstanding receivables, and staff performance
+                        — all unified.</div>
+                    <span class="rec-impact">Impact: Real-time operational decision support</span>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /main -->
+
+    <!-- CHATBOT FAB -->
+    <div class="chat-fab" id="chatFab" title="SniperAI Analyst">💬</div>
+    <div class="chat-win" id="chatWin">
+        <div class="chat-hdr">
+            <div>
+                <div class="chat-hdr-name">SniperAI Analyst</div>
+                <div class="chat-hdr-sub">● Online — Hotel Intelligence Assistant</div>
+            </div>
+            <button class="chat-close" id="chatClose">✕</button>
+        </div>
+        <div class="chat-msgs" id="chatMsgs">
+            <div class="cmsg bot">Hello! I'm your Hotel Intelligence assistant. Ask me about cancellations, model
+                performance, or guest segments. 🎯</div>
+        </div>
+        <div class="chat-suggs">
+            <button class="sugg" onclick="askSugg(this)">What's the cancel rate?</button>
+            <button class="sugg" onclick="askSugg(this)">Best ML model?</button>
+            <button class="sugg" onclick="askSugg(this)">High-risk bookings?</button>
+        </div>
+        <div class="chat-input-row">
+            <input class="chat-input" id="chatInput" placeholder="Ask about the data…" type="text">
+            <button class="chat-send" id="chatSend">➤</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p style="font-family:var(--font-d);font-size:20px;color:var(--white);margin-bottom:8px">Hotel
+            <strong>Intelligence</strong> System
+        </p>
+        <p>Built by <strong>Mohamed Wael</strong> · Military Technical College · Supervised by <strong>Dr. Mohamed
+                El Shafey</strong> · March 2026</p>
+        <p style="margin-top:8px;font-size:11px;letter-spacing:.5px">DATA MINING & VISUALIZATION — DIGITAL PIONEERS
+            INITIATIVE</p>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
